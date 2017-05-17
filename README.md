@@ -1,2 +1,4 @@
 # TaskScheduling
 auto schedule tasks 
+
+#基于任务权限维度的 调度任务算法
