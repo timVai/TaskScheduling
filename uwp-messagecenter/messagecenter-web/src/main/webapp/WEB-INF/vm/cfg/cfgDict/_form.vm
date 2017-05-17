@@ -1,0 +1,97 @@
+<!-- field start -->
+<div class="form-group">
+    <label for="id" class="col-sm-3 control-label">id</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="id" name="id" placeholder="id" value="$!{entity.id}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="dictType" class="col-sm-3 control-label">dictType</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="dictType" name="dictType" placeholder="dictType" value="$!{entity.dictType}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="typeName" class="col-sm-3 control-label">typeName</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="typeName" name="typeName" placeholder="typeName" value="$!{entity.typeName}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="dictKey" class="col-sm-3 control-label">dictKey</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="dictKey" name="dictKey" placeholder="dictKey" value="$!{entity.dictKey}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="dictKeyName" class="col-sm-3 control-label">dictKeyName</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="dictKeyName" name="dictKeyName" placeholder="dictKeyName" value="$!{entity.dictKeyName}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="dictValue" class="col-sm-3 control-label">dictValue</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="dictValue" name="dictValue" placeholder="dictValue" value="$!{entity.dictValue}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="createPin" class="col-sm-3 control-label">createPin</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="createPin" name="createPin" placeholder="createPin" value="$!{entity.createPin}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="createTime" class="col-sm-3 control-label">createTime</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="createTime" name="createTime" placeholder="createTime" value="$!{entity.createTime}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="updatePin" class="col-sm-3 control-label">updatePin</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="updatePin" name="updatePin" placeholder="updatePin" value="$!{entity.updatePin}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="updateTime" class="col-sm-3 control-label">updateTime</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="updateTime" name="updateTime" placeholder="updateTime" value="$!{entity.updateTime}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="ts" class="col-sm-3 control-label">ts</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="ts" name="ts" placeholder="ts" value="$!{entity.ts}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="sysVersion" class="col-sm-3 control-label">sysVersion</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="sysVersion" name="sysVersion" placeholder="sysVersion" value="$!{entity.sysVersion}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="yn" class="col-sm-3 control-label">yn</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="yn" name="yn" placeholder="yn" value="$!{entity.yn}">
+    </div>
+</div>
+<!-- field end -->
+
+
+<!-- actions start -->
+<div class="form-group actions">
+    <div class="col-sm-offset-3 col-sm-3">
+        <button type="cancel" class="btn btn-default btn-label-left">
+            <span><i class="fa fa-clock-o txt-danger"></i></span> 取消
+        </button>
+    </div>
+
+    <div class="col-sm-3">
+        <button type="submit" class="btn btn-primary btn-label-left ladda-button" data-style="zoom-out">
+            <span><i class="fa fa-clock-o"></i></span> <span class="ladda-label">提交</span>
+        </button>
+    </div>
+</div>
+<!-- actions end -->

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context 
+         http://www.springframework.org/schema/context/spring-context.xsd
+	     http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd
+         http://www.springframework.org/schema/aop 
+	     http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/util 
+    	 http://www.springframework.org/schema/util/spring-util.xsd"
+       default-autowire="byName" default-lazy-init="true">
+
+    <!-- 自动扫描 -->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.jd.uwp.web.*" >
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <!-- 启用注解支持 -->
+    <mvc:annotation-driven conversion-service="conversionService">
+        <mvc:argument-resolvers>
+            <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"></bean>
+        </mvc:argument-resolvers>
+        <mvc:return-value-handlers>
+            <bean class="com.jd.junion.repository.datatables.DataTablesHandlerMethodReturnValueHandler">
+                <constructor-arg>
+                    <ref local="messageConverters"></ref>
+                </constructor-arg>
+            </bean>
+        </mvc:return-value-handlers>
+    </mvc:annotation-driven>
+
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatterRegistrars">
+            <bean class="com.jd.common.sso.springmvc.converter.DefaultFormatterRegistrar" ></bean>
+        </property>
+    </bean>
+
+    <mvc:default-servlet-handler />
+
+    <!-- static resources --><!-- 24 * 3600 * 10 -->
+    <mvc:resources location="/static/" mapping="/static/**" cache-period="864000"></mvc:resources>
+
+    <!-- 异常处理 将Controller抛出的异常转到特定View -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Throwable">public/error/500</prop>
+            </props>
+        </property>
+    </bean>
+
+    <util:list id="messageConverters">
+        <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+            <property name="supportedMediaTypes">
+                <list>
+                    <value>application/json</value>
+                    <value>application/javascript</value>
+                    <value>text/json</value>
+                    <value>text/javascript</value>
+                </list>
+            </property>
+        </bean>
+    </util:list>
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"></property>
+        <property name="validationMessageSource" ref="messageSource"></property>
+    </bean>
+    <!-- 文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="107374182400" ></property><!-- 100G -->
+    </bean>
+
+    <!-- locale related 使用cookie处理国际化-->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="cookieName" value="_clientlocale"></property>
+        <property name="defaultLocale" value="zh_CN"></property>
+        <property name="cookieMaxAge" value="2147483647"></property>
+    </bean>
+
+    <!-- template view -->
+    <bean id="velocityConfig"  class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF/vm/" ></property>
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">UTF-8</prop>
+                <prop key="output.encoding">UTF-8</prop>
+                <prop key="contentType">text/html;charset=UTF-8</prop>
+                <prop key="velocimacro.library">public/macro.vm</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="layoutUrl" value="layout/empty.vm" ></property>
+        <property name="cache" value="true" ></property>
+        <property name="suffix" value=".vm" ></property>
+        <property name="exposeSpringMacroHelpers" value="true" ></property>
+        <property name="dateToolAttribute" value="dateTool" ></property>
+        <property name="numberToolAttribute" value="numberTool" ></property>
+        <property name="contentType" value="text/html;charset=UTF-8" ></property>
+        <property name="toolboxConfigLocation">
+            <value>/WEB-INF/vm/toolbox.xml</value>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="defaultContentType" value="text/html" ></property>
+        <!-- not by accept header -->
+        <property name="ignoreAcceptHeader" value="true"></property>
+        <!-- by extension -->
+        <property name="mediaTypes">
+            <map>
+                <entry key="xml" value="application/xml" ></entry>
+                <entry key="json" value="application/json" ></entry>
+            </map>
+        </property>
+        <property name="viewResolvers">
+            <list>
+                <ref bean="velocityViewResolver"></ref>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <!-- for application/json -->
+                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" ></bean>
+            </list>
+        </property>
+    </bean>
+
+    <!-- url mapping with interceptor -->
+    <mvc:interceptors>
+        <!--更改国际化(Locale)拦截器，只要参数中带有指定参数即可 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**" ></mvc:mapping>
+            <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

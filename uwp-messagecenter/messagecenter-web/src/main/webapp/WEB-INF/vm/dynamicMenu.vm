@@ -1,0 +1,6 @@
+               <li>
+                    <a class="ajax-link" href="#springUrl('/cfg/cfgDict')">
+                        <i class="fa fa-folder"></i> <span>cfgDict</span> <small class="badge pull-right bg-green">CfgDict</small>
+                    </a>
+                </li>
+                <!-- generator-insert-location -->

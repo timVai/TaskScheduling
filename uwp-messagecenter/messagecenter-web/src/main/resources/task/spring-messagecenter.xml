@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd"
+       default-lazy-init="false">
+
+       <bean id="cacheService" class="com.jd.uwp.messagecenter.cache.CacheServiceImpl" />
+
+       <bean id="messageService" class="com.jd.uwp.messagecenter.service.MessageServiceImpl">
+           <property name="cacheService" ref="cacheService" />
+       </bean>
+
+       <bean id="messageHandler" class="com.jd.uwp.messagecenter.service.WebSocketMessageHandler">
+              <property name="cacheService" ref="cacheService" />
+              <property name="messageService" ref="messageService" />
+       </bean>
+
+       <bean id="webSocketServer" class="com.jd.uwp.messagecenter.factory.WebSocketServiceFactory">
+              <property name="messageHandler" ref="messageHandler" />
+              <property name="port" value="${task.ws.port}" />
+       </bean>
+
+</beans>

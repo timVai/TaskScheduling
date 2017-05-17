@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-lazy-init="false">
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <context:component-scan base-package="com.jd.uwp.*">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <bean class="com.jd.ump.annotation.JAnnotation">
+        <!-- 初始化系统存活监控点 key -->
+        <property name="systemKey" value="system.com.jd.uwp.messagecenter"></property>
+        <!-- 初始化系统的jvm监控 key-->
+        <property name="jvmKey" value="jvm.com.jd.uwp.messagecenter"></property>
+    </bean>
+
+    <bean class="com.jd.ams.common.factory.CommonFactory" lazy-init="false"></bean>
+    <import resource="classpath:service/spring-service.xml"></import>
+    <import resource="classpath:jms/spring-jmq.xml"></import>
+    <import resource="classpath:task/spring-messagecenter.xml"></import>
+    <!--<import resource="classpath:jsf/spring-jsf-provider.xml"></import>-->
+
+    <beans profile="env">
+        <context:property-placeholder ignore-resource-not-found="false" location="
+         classpath*:env/auth.properties,
+         classpath*:env/important.properties,
+         classpath*:env/profile-jsf.properties,
+         classpath*:env/profile-jmq.properties,
+         classpath*:env/messagecenter.properties"/>
+    </beans>
+</beans>

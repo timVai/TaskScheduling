@@ -1,0 +1,5 @@
+<form class="form-horizontal form-newEdit" role="form" action="#springUrl('/cfg/cfgDict')" method="post">
+
+    #parse('/cfg/cfgDict/_form.vm')
+
+</form>

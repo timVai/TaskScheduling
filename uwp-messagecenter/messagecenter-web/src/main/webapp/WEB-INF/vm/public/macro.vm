@@ -1,0 +1,45 @@
+
+
+#macro(showPage $page)
+#if($page != "")
+<div class="page textR">
+#if($page.extInfo&&$page.extInfo.equals("")==false)
+	<i class="ico-tip"></i>$page.extInfo
+#end
+	每页显示<input id="page-pageSize" class="text w30" type="text" value="$page.pageSize" onKeyup="XUI.form.setPageSize($page.pageSize,this,event);"/>$page.unit,共$page.totalCount$page.unit记录.
+#if($page.firstPage == false)
+	<a class="pre" href="javascript:void(0);" onclick="XUI.form.page($page.previousPage);">上页</a>
+	<a href="javascript:void(0);" onclick="XUI.form.page(1)">1</a>
+#end
+ #if($page.currentPage>2+2)
+	<span>...</span>  #end
+#foreach($i in [2..1]) #if($page.currentPage - $i > 1)
+	<a href="javascript:void(0);" onclick="XUI.form.page($pageIndex)">$pageIndex</a>
+#end
+#end
+	<a class="current">$page.currentPage</a>#foreach($i in [1..2]) #if($page.pageCount - $page.currentPage - $i > 0)
+	<a href="javascript:void(0);" onclick="XUI.form.page($pageIndex)">$pageIndex</a>
+#end
+#end
+#if($page.pageCount - $page.currentPage > 2+1)
+	<span>...</span>#end
+#if($page.hasNextPage())
+	<a href="javascript:void(0);" onclick="XUI.form.page($page.pageCount)">$page.pageCount</a>
+	<a class="next" href="javascript:void(0);" onclick="XUI.form.page($page.nextPage)">下页</a>
+#end
+#if($page.pageCount > 1)
+	<a class="pre" href="javascript:void(0);" onclick="XUI.form.showAll($page.totalCount);">显示全部</a>
+#end
+</div>
+#end
+#end
+
+
+#macro(sorting $obj $field)
+#if($obj && $obj.orderField == $field)
+ class="sorting_$obj.orderFieldType" data-orderFieldType="$obj.orderFieldNextType" 
+#else
+ class="sorting" data-orderFieldType="DESC" 
+#end
+ data-orderField="$field" 
+#end

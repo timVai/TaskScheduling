@@ -1,0 +1,8 @@
+<!-- 表单 -->
+<form class="form-horizontal form-edit" role="form" action="#springUrl('/cfg/cfgDict/')$!{id}" method="post">
+    <input type="hidden" name="id" value="$!{entity.id}">
+    <input type="hidden" name="sysVersion" value="$!{entity.sysVersion}">
+
+    #parse('/cfg/cfgDict/_form.vm')
+
+</form>

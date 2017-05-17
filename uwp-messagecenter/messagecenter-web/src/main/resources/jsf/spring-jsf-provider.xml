@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jsf="http://jsf.jd.com/schema/jsf"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://jsf.jd.com/schema/jsf http://jsf.jd.com/schema/jsf/jsf.xsd">
+
+    <jsf:server id="jsf" protocol="jsf" port="9090" host="0.0.0.0"/>
+
+    <!--消息中心接口-->
+    <bean id="messageCenterJsfServiceImpl" class="com.jd.uwp.messagecenter.jsf.MessageCenterJsfServiceImpl"></bean>
+    <jsf:provider id="messageCenterJsfService" interface="com.jd.uwp.messagecenter.jsf.service.MessageCenterJsfServiceProvider"
+                  ref="messageCenterJsfServiceImpl" alias="${message.jsf.alias}" >
+        <jsf:parameter key="token" value="${message.jsf.token}" hide="true"/>
+    </jsf:provider>
+
+</beans>

@@ -1,0 +1,39 @@
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
+<script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>
+<![endif]-->
+
+<script type="text/javascript" src="#springUrl('/static/plugins/jquery/jquery-2.1.0.min.js')"></script>
+<script type="text/javascript" src="#springUrl('/static/plugins/nicescroll/3.6.0/jquery.nicescroll.min.js')"></script>
+<script type="text/javascript" src="#springUrl('/static/plugins/pace/1.0.2/pace.min.js')"></script>
+
+<script type="application/javascript">
+    CONTEXT_PATH = '#springUrl('')';
+    context_path = '#springUrl('')';
+
+    $(function(){
+        // custom scrollbar
+        $("#sidebar").niceScroll({
+            styler:"fb",
+            cursorcolor:"#3c8dbc",
+            cursorwidth: '3',
+            cursorborderradius: '10px',
+            //background: '#3c8dbc',
+            spacebarenabled:false,
+            railalign: 'left',
+            cursorborder: ''
+        });
+
+        $("html").niceScroll({
+            styler:"fb",
+            cursorcolor:"#3c8dbc",
+            cursorwidth: '6',
+            cursorborderradius: '10px',
+            //background: '#3c8dbc',
+            spacebarenabled:false,
+            cursorborder: '',
+            zindex: '1000'
+        });
+    });
+</script>

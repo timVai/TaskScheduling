@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<!--  meta 标签  -->
+    #parse('/include/meta.vm')
+<title>sample</title>
+<!--  link 标签  -->
+    #parse('/include/link_top.vm')
+<!--  script 标签  -->
+    #parse('/include/script_top.vm')
+<!--  script 标签  -->
+    #parse('/include/script_bottom.vm')
+<body style="padding-top: 10px;">
+    $screen_content
+</body>
+</html>
